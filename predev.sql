@@ -1,0 +1,11 @@
+drop database databasename;
+create database databasename;
+use databasename;
+source maskeddbname;
+UPDATE hs_hr_employee SET emp_work_email=concat('arafath+',emp_firstname,'@orangehrm.us.com');
+UPDATE ohrm_job_candidate SET email = concat( 'arafath', ohrm_job_candidate.id , '@orangehrm.us.com');
+update ohrm_user set user_password = MD5('admin');
+update ohrm_user set user_name = 'admin' where id = 1;
+truncate ohrm_email_queue;
+truncate ohrm_email_configuration;
+INSERT INTO ohrm_email_configuration (id, mail_type, sent_as, sender_name, sendmail_path, smtp_host, smtp_port, smtp_username, smtp_password, smtp_auth_type, smtp_security_type) VALUES (NULL, 'smtp', 'arafath@orangehrm.us.com', 'doNotReply@or.com', '', 'smtp.gmail.com', '465', 'arafath@orangehrm.us.com', '0773735836', 'login', 'ssl');
