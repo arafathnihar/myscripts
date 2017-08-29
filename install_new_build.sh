@@ -15,12 +15,12 @@ PROJECTNOTE=$NOTEROOT'/'$NAME
 ERRORLOG=$WEBROOT'/'$DOMAINNAME'/error.log'
 ACCESS=$WEBROOT'/'$DOMAINNAME'/access.log'
 
-echo "Setting up a development environment for "$DOMAINNAME"..."
+echo "Setting up a orangehrm for "$DOMAINNAME"..."
 echo "Creating project note directory..."
 mkdir -p $PROJECTNOTE
 
 echo "Creating note predev sql file..."
-cp $NOTEROOT'myscripts/predev.sql' $PROJECTNOTE/$NAME'_predev.sql'
+cp $NOTEROOT'/myscripts/predev.sql' $PROJECTNOTE/$NAME'_predev.sql'
 sed -i -- 's/databasename/'$NAME'/g' $PROJECTNOTE/$NAME'_predev.sql'
 
 echo "Creating project root directory..."
@@ -41,9 +41,17 @@ echo "Adding to hosts file..."
 sudo sed -i "/localhost.localdomain/ s/$/ $DOMAINNAME/" /etc/hosts
 
 echo "Adding to virtual host file..."
-VIRTUALHOSTPATH='etc/httpd/conf.d/'$NAME'.local.conf'
+VIRTUALHOSTPATH='/etc/httpd/conf.d/'$NAME'.local.conf'
 sudo cp /etc/httpd/conf.d/sandals.local.conf $VIRTUALHOSTPATH
 sudo sed -i -- 's/sandals/'$NAME'/g' $VIRTUALHOSTPATH
 
-echo "Adding to virtual host file..."
+echo "Moving files to public_html..."
+cd $PROJECTROOT
+sudo mv orangehrm*/* .
+sudo mv orangehrm*/.h* .
+
+echo ""
+sudo cp /home/arafath/Documents/licence/ohrm.license.php $PROJECTROOT
+
+echo "Restarting Apache..."
 sudo apachectl restart

@@ -20,7 +20,7 @@ echo "Creating project note directory..."
 mkdir -p $PROJECTNOTE
 
 echo "Creating note predev sql file..."
-cp $NOTEROOT'myscripts/predev.sql' $PROJECTNOTE/$NAME'_predev.sql'
+cp $NOTEROOT'/myscripts/predev.sql' $PROJECTNOTE/$NAME'_predev.sql'
 sed -i -- 's/databasename/'$NAME'/g' $PROJECTNOTE/$NAME'_predev.sql'
 
 echo "Creating project root directory..."
@@ -44,11 +44,11 @@ echo "Adding to hosts file..."
 sudo sed -i "/localhost.localdomain/ s/$/ $DOMAINNAME/" /etc/hosts
 
 echo "Adding to virtual host file..."
-VIRTUALHOSTPATH='etc/httpd/conf.d/'$NAME'.local.conf'
+VIRTUALHOSTPATH='/etc/httpd/conf.d/'$NAME'.local.conf'
 sudo cp /etc/httpd/conf.d/sandals.local.conf $VIRTUALHOSTPATH
 sudo sed -i -- 's/sandals/'$NAME'/g' $VIRTUALHOSTPATH
 
-echo "Adding to virtual host file..."
+echo "Restarting Apache..."
 sudo apachectl restart
 
 echo "Opening preoject in PhpStrom..."
